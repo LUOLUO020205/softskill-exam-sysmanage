@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.Role">
+        <id column="C_ROLE_ID" jdbcType="BIGINT" property="cRoleId"/>
+        <result column="C_ROLE_NAME" jdbcType="VARCHAR" property="cRoleName"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_ROLE_ID, C_ROLE_NAME, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        where C_ROLE_ID = #{cRoleId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_role
+        where C_ROLE_ID = #{cRoleId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.Role">
+        insert into t_role (C_ROLE_ID, C_ROLE_NAME, C_CREATE_TIME,
+        C_UPDATE_TIME)
+        values (#{cRoleId,jdbcType=BIGINT}, #{cRoleName,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP},
+        #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.Role">
+        insert into t_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cRoleId != null">
+                C_ROLE_ID,
+            </if>
+            <if test="cRoleName != null">
+                C_ROLE_NAME,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cRoleId != null">
+                #{cRoleId,jdbcType=BIGINT},
+            </if>
+            <if test="cRoleName != null">
+                #{cRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.Role">
+        update t_role
+        <set>
+            <if test="cRoleName != null">
+                C_ROLE_NAME = #{cRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_ROLE_ID = #{cRoleId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.Role">
+        update t_role
+        set C_ROLE_NAME = #{cRoleName,jdbcType=VARCHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_ROLE_ID = #{cRoleId,jdbcType=BIGINT}
+    </update>
+</mapper>

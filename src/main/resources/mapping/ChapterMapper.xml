@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.ChapterMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.Chapter">
+        <id column="C_CH_ID" jdbcType="BIGINT" property="cChId"/>
+        <result column="C_COURSE_ID" jdbcType="BIGINT" property="cCourseId"/>
+        <result column="C_CH_NAME" jdbcType="VARCHAR" property="cChName"/>
+        <result column="C_COURSE_SORTNUM" jdbcType="INTEGER" property="cCourseSortnum"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+        <result column="C_COURSE_NAME" jdbcType="VARCHAR" property="cCrName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_CH_ID, C_COURSE_ID, C_CH_NAME, C_COURSE_SORTNUM,C_CREATE_TIME,C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_chapter
+        where C_CH_ID = #{cChId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectAllChapterByCouseId" parameterType="Map" resultMap="BaseResultMap">
+        SELECT
+          cap.C_CH_ID,
+          cap.C_COURSE_ID,
+          cap.C_CH_NAME,
+          cap.C_COURSE_SORTNUM,
+          cap.C_CREATE_TIME,
+          cap.C_UPDATE_TIME,
+          crs.C_COURSE_NAME
+        FROM
+          t_chapter cap
+          LEFT JOIN t_course crs
+            ON cap.C_COURSE_ID = crs.C_COURSE_ID
+        WHERE cap.C_COURSE_ID = #{couseId}
+        <trim>
+            <if test="cCourseNameSearchkey != null and cCourseNameSearchkey != ''">
+                and crs.C_COURSE_NAME like CONCAT('%',#{cCourseNameSearchkey},'%')
+            </if>
+            <if test="cChapterNameSearchkey != null and cChapterNameSearchkey != ''">
+                and cap.C_CH_NAME like CONCAT('%',#{cChapterNameSearchkey},'%')
+            </if>
+        </trim>
+        limit #{pageModel.startRow},#{pageModel.pageSize};
+    </select>
+
+    <select id="countAllChapterByCouseId" parameterType="Map" resultType="java.lang.Long">
+        select count(1)
+        from t_chapter cap
+            LEFT JOIN t_course crs
+              ON cap.C_COURSE_ID = crs.C_COURSE_ID
+        where cap.C_COURSE_ID = #{couseId}
+        <trim>
+            <if test="cCourseNameSearchkey != null and cCourseNameSearchkey != ''">
+                and crs.C_COURSE_NAME like CONCAT('%',#{cCourseNameSearchkey},'%')
+            </if>
+            <if test="cChapterNameSearchkey != null and cChapterNameSearchkey != ''">
+                and cap.C_CH_NAME like CONCAT('%',#{cChapterNameSearchkey},'%')
+            </if>
+        </trim>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_chapter
+        where C_CH_ID = #{cChId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.Chapter">
+        insert into t_chapter (C_COURSE_ID, C_CH_NAME,
+        C_COURSE_SORTNUM, C_CREATE_TIME, C_UPDATE_TIME
+        )
+        values (#{cCourseId,jdbcType=BIGINT}, #{cChName,jdbcType=VARCHAR},
+        #{cCourseSortnum,jdbcType=INTEGER}, now(), now()
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.Chapter">
+        insert into t_chapter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cChId != null">
+                C_CH_ID,
+            </if>
+            <if test="cCourseId != null">
+                C_COURSE_ID,
+            </if>
+            <if test="cChName != null">
+                C_CH_NAME,
+            </if>
+            <if test="cCourseSortnum != null">
+                C_COURSE_SORTNUM,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cChId != null">
+                #{cChId,jdbcType=BIGINT},
+            </if>
+            <if test="cCourseId != null">
+                #{cCourseId,jdbcType=BIGINT},
+            </if>
+            <if test="cChName != null">
+                #{cChName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCourseSortnum != null">
+                #{cCourseSortnum,jdbcType=INTEGER},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.Chapter">
+        update t_chapter
+        <set>
+            <if test="cCourseId != null">
+                C_COURSE_ID = #{cCourseId,jdbcType=BIGINT},
+            </if>
+            <if test="cChName != null">
+                C_CH_NAME = #{cChName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCourseSortnum != null">
+                C_COURSE_SORTNUM = #{cCourseSortnum,jdbcType=INTEGER},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = now(),
+            </if>
+        </set>
+        where C_CH_ID = #{cChId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.Chapter">
+        update t_chapter
+        set C_COURSE_ID = #{cCourseId,jdbcType=BIGINT},
+        C_CH_NAME = #{cChName,jdbcType=VARCHAR},
+        C_COURSE_SORTNUM = #{cCourseSortnum,jdbcType=INTEGER},
+        C_UPDATE_TIME = now()
+        where C_CH_ID = #{cChId,jdbcType=BIGINT}
+    </update>
+</mapper>

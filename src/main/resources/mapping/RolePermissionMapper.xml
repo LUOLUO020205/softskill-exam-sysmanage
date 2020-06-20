@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.RolePermissionMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.RolePermissionKey">
+        <id column="C_PERM_ID" jdbcType="BIGINT" property="cPermId"/>
+        <id column="C_ROLE_ID" jdbcType="BIGINT" property="cRoleId"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="com.softskill.exam.domain.RolePermissionKey">
+        delete from t_role_permission
+        where C_PERM_ID = #{cPermId,jdbcType=BIGINT}
+        and C_ROLE_ID = #{cRoleId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.RolePermissionKey">
+        insert into t_role_permission (C_PERM_ID, C_ROLE_ID)
+        values (#{cPermId,jdbcType=BIGINT}, #{cRoleId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.RolePermissionKey">
+        insert into t_role_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cPermId != null">
+                C_PERM_ID,
+            </if>
+            <if test="cRoleId != null">
+                C_ROLE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cPermId != null">
+                #{cPermId,jdbcType=BIGINT},
+            </if>
+            <if test="cRoleId != null">
+                #{cRoleId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>

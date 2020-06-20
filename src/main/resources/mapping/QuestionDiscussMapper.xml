@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.QuestionDiscussMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.QuestionDiscuss">
+        <id column="C_QD_ID" jdbcType="BIGINT" property="cQdId"/>
+        <result column="C_UID" jdbcType="BIGINT" property="cUid"/>
+        <result column="C_QUES_ID" jdbcType="BIGINT" property="cQuesId"/>
+        <result column="C_QD_CONTENT" jdbcType="VARCHAR" property="cQdContent"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_QD_ID, C_UID, C_QUES_ID, C_QD_CONTENT, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_question_discuss
+        where C_QD_ID = #{cQdId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_question_discuss
+        where C_QD_ID = #{cQdId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.QuestionDiscuss">
+        insert into t_question_discuss (C_QD_ID, C_UID, C_QUES_ID,
+        C_QD_CONTENT, C_CREATE_TIME, C_UPDATE_TIME
+        )
+        values (#{cQdId,jdbcType=BIGINT}, #{cUid,jdbcType=BIGINT}, #{cQuesId,jdbcType=BIGINT},
+        #{cQdContent,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.QuestionDiscuss">
+        insert into t_question_discuss
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cQdId != null">
+                C_QD_ID,
+            </if>
+            <if test="cUid != null">
+                C_UID,
+            </if>
+            <if test="cQuesId != null">
+                C_QUES_ID,
+            </if>
+            <if test="cQdContent != null">
+                C_QD_CONTENT,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cQdId != null">
+                #{cQdId,jdbcType=BIGINT},
+            </if>
+            <if test="cUid != null">
+                #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cQuesId != null">
+                #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cQdContent != null">
+                #{cQdContent,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.QuestionDiscuss">
+        update t_question_discuss
+        <set>
+            <if test="cUid != null">
+                C_UID = #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cQuesId != null">
+                C_QUES_ID = #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cQdContent != null">
+                C_QD_CONTENT = #{cQdContent,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_QD_ID = #{cQdId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.QuestionDiscuss">
+        update t_question_discuss
+        set C_UID = #{cUid,jdbcType=BIGINT},
+        C_QUES_ID = #{cQuesId,jdbcType=BIGINT},
+        C_QD_CONTENT = #{cQdContent,jdbcType=VARCHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_QD_ID = #{cQdId,jdbcType=BIGINT}
+    </update>
+</mapper>

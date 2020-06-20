@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.QuestionOptionsMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.QuestionOptions">
+        <id column="C_QO_ID" jdbcType="BIGINT" property="cQoId"/>
+        <result column="C_QUES_ID" jdbcType="BIGINT" property="cQuesId"/>
+        <result column="C_QO_CONTENT" jdbcType="VARCHAR" property="cQoContent"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_QO_ID, C_QUES_ID, C_QO_CONTENT, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_question_options
+        where C_QO_ID = #{cQoId,jdbcType=BIGINT}
+    </select>
+    <select id="selectAllQuestionOptionByCQuestId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_question_options
+        where C_QUES_ID = #{cQuesId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_question_options
+        where C_QO_ID = #{cQoId,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteOptionByCQuesId" parameterType="java.lang.Long">
+        delete from t_question_options
+        where C_QUES_ID = #{cQuesId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.QuestionOptions">
+        insert into t_question_options (C_QO_ID, C_QUES_ID, C_QO_CONTENT,
+        C_CREATE_TIME, C_UPDATE_TIME)
+        values (#{cQoId,jdbcType=BIGINT}, #{cQuesId,jdbcType=BIGINT}, #{cQoContent,jdbcType=VARCHAR},
+        #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="batchInsert" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="cQoId">
+        insert into t_question_options  (C_QUES_ID, C_QO_CONTENT,
+        C_CREATE_TIME, C_UPDATE_TIME) values
+        <!--item就是List里每一项的对象名，要用","分割每一条数据，最后要";"结尾-->
+        <foreach collection="list" item="questionOption" separator="," close=";">
+            (#{questionOption.cQuesId},#{questionOption.cQoContent},now(),now())
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.QuestionOptions">
+        insert into t_question_options
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cQoId != null">
+                C_QO_ID,
+            </if>
+            <if test="cQuesId != null">
+                C_QUES_ID,
+            </if>
+            <if test="cQoContent != null">
+                C_QO_CONTENT,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cQoId != null">
+                #{cQoId,jdbcType=BIGINT},
+            </if>
+            <if test="cQuesId != null">
+                #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cQoContent != null">
+                #{cQoContent,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.QuestionOptions">
+        update t_question_options
+        <set>
+            <if test="cQuesId != null">
+                C_QUES_ID = #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cQoContent != null">
+                C_QO_CONTENT = #{cQoContent,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_QO_ID = #{cQoId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.QuestionOptions">
+        update t_question_options
+        set C_QUES_ID = #{cQuesId,jdbcType=BIGINT},
+        C_QO_CONTENT = #{cQoContent,jdbcType=VARCHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_QO_ID = #{cQoId,jdbcType=BIGINT}
+    </update>
+    <update id="batchUpdate"  parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update t_question_options
+            <set>
+                C_QO_CONTENT =  #{item.cQoContent} ,
+                C_UPDATE_TIME =  now()
+            </set>
+            where C_QO_ID = #{item.cQoId}
+        </foreach>
+    </update>
+</mapper>

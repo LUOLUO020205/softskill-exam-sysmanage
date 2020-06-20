@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.PermissionMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.Permission">
+        <id column="C_PERM_ID" jdbcType="BIGINT" property="cPermId"/>
+        <result column="C_PERM_NAME" jdbcType="VARCHAR" property="cPermName"/>
+        <result column="C_PERM_TYPE" jdbcType="CHAR" property="cPermType"/>
+        <result column="C_PERM_URL" jdbcType="VARCHAR" property="cPermUrl"/>
+        <result column="C_PERM_PID" jdbcType="BIGINT" property="cPermPid"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_PERM_ID, C_PERM_NAME, C_PERM_TYPE, C_PERM_URL, C_PERM_PID, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_permission
+        where C_PERM_ID = #{cPermId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_permission
+        where C_PERM_ID = #{cPermId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.Permission">
+        insert into t_permission (C_PERM_ID, C_PERM_NAME, C_PERM_TYPE,
+        C_PERM_URL, C_PERM_PID, C_CREATE_TIME,
+        C_UPDATE_TIME)
+        values (#{cPermId,jdbcType=BIGINT}, #{cPermName,jdbcType=VARCHAR}, #{cPermType,jdbcType=CHAR},
+        #{cPermUrl,jdbcType=VARCHAR}, #{cPermPid,jdbcType=BIGINT}, #{cCreateTime,jdbcType=TIMESTAMP},
+        #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.Permission">
+        insert into t_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cPermId != null">
+                C_PERM_ID,
+            </if>
+            <if test="cPermName != null">
+                C_PERM_NAME,
+            </if>
+            <if test="cPermType != null">
+                C_PERM_TYPE,
+            </if>
+            <if test="cPermUrl != null">
+                C_PERM_URL,
+            </if>
+            <if test="cPermPid != null">
+                C_PERM_PID,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cPermId != null">
+                #{cPermId,jdbcType=BIGINT},
+            </if>
+            <if test="cPermName != null">
+                #{cPermName,jdbcType=VARCHAR},
+            </if>
+            <if test="cPermType != null">
+                #{cPermType,jdbcType=CHAR},
+            </if>
+            <if test="cPermUrl != null">
+                #{cPermUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="cPermPid != null">
+                #{cPermPid,jdbcType=BIGINT},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.Permission">
+        update t_permission
+        <set>
+            <if test="cPermName != null">
+                C_PERM_NAME = #{cPermName,jdbcType=VARCHAR},
+            </if>
+            <if test="cPermType != null">
+                C_PERM_TYPE = #{cPermType,jdbcType=CHAR},
+            </if>
+            <if test="cPermUrl != null">
+                C_PERM_URL = #{cPermUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="cPermPid != null">
+                C_PERM_PID = #{cPermPid,jdbcType=BIGINT},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_PERM_ID = #{cPermId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.Permission">
+        update t_permission
+        set C_PERM_NAME = #{cPermName,jdbcType=VARCHAR},
+        C_PERM_TYPE = #{cPermType,jdbcType=CHAR},
+        C_PERM_URL = #{cPermUrl,jdbcType=VARCHAR},
+        C_PERM_PID = #{cPermPid,jdbcType=BIGINT},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_PERM_ID = #{cPermId,jdbcType=BIGINT}
+    </update>
+</mapper>

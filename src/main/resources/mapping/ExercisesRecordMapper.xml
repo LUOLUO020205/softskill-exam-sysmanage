@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.ExercisesRecordMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.ExercisesRecord">
+        <id column="C_ER_ID" jdbcType="BIGINT" property="cErId"/>
+        <result column="C_UID" jdbcType="BIGINT" property="cUid"/>
+        <result column="C_ER_TYPE" jdbcType="CHAR" property="cErType"/>
+        <result column="C_ER_QUESTION_ID" jdbcType="BIGINT" property="cErQuestionId"/>
+        <result column="C_ER_QUESTION_NUMS" jdbcType="INTEGER" property="cErQuestionNums"/>
+        <result column="C_ER_TRUE_NUMS" jdbcType="INTEGER" property="cErTrueNums"/>
+        <result column="C_ER_FALSE_NUMS" jdbcType="INTEGER" property="cErFalseNums"/>
+        <result column="C_DER_SCORE" jdbcType="INTEGER" property="cDerScore"/>
+        <result column="C_DER_ACCURACY" jdbcType="DECIMAL" property="cDerAccuracy"/>
+        <result column="C_RESULT" jdbcType="VARCHAR" property="cResult"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_ER_ID, C_UID, C_ER_TYPE, C_ER_QUESTION_ID, C_ER_QUESTION_NUMS, C_ER_TRUE_NUMS,
+        C_ER_FALSE_NUMS, C_DER_SCORE, C_DER_ACCURACY, C_RESULT, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exercises_record
+        where C_ER_ID = #{cErId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_exercises_record
+        where C_ER_ID = #{cErId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.ExercisesRecord">
+        insert into t_exercises_record (C_ER_ID, C_UID, C_ER_TYPE,
+        C_ER_QUESTION_ID, C_ER_QUESTION_NUMS, C_ER_TRUE_NUMS,
+        C_ER_FALSE_NUMS, C_DER_SCORE, C_DER_ACCURACY,
+        C_RESULT, C_CREATE_TIME, C_UPDATE_TIME
+        )
+        values (#{cErId,jdbcType=BIGINT}, #{cUid,jdbcType=BIGINT}, #{cErType,jdbcType=CHAR},
+        #{cErQuestionId,jdbcType=BIGINT}, #{cErQuestionNums,jdbcType=INTEGER}, #{cErTrueNums,jdbcType=INTEGER},
+        #{cErFalseNums,jdbcType=INTEGER}, #{cDerScore,jdbcType=INTEGER}, #{cDerAccuracy,jdbcType=DECIMAL},
+        #{cResult,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.ExercisesRecord">
+        insert into t_exercises_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cErId != null">
+                C_ER_ID,
+            </if>
+            <if test="cUid != null">
+                C_UID,
+            </if>
+            <if test="cErType != null">
+                C_ER_TYPE,
+            </if>
+            <if test="cErQuestionId != null">
+                C_ER_QUESTION_ID,
+            </if>
+            <if test="cErQuestionNums != null">
+                C_ER_QUESTION_NUMS,
+            </if>
+            <if test="cErTrueNums != null">
+                C_ER_TRUE_NUMS,
+            </if>
+            <if test="cErFalseNums != null">
+                C_ER_FALSE_NUMS,
+            </if>
+            <if test="cDerScore != null">
+                C_DER_SCORE,
+            </if>
+            <if test="cDerAccuracy != null">
+                C_DER_ACCURACY,
+            </if>
+            <if test="cResult != null">
+                C_RESULT,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cErId != null">
+                #{cErId,jdbcType=BIGINT},
+            </if>
+            <if test="cUid != null">
+                #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cErType != null">
+                #{cErType,jdbcType=CHAR},
+            </if>
+            <if test="cErQuestionId != null">
+                #{cErQuestionId,jdbcType=BIGINT},
+            </if>
+            <if test="cErQuestionNums != null">
+                #{cErQuestionNums,jdbcType=INTEGER},
+            </if>
+            <if test="cErTrueNums != null">
+                #{cErTrueNums,jdbcType=INTEGER},
+            </if>
+            <if test="cErFalseNums != null">
+                #{cErFalseNums,jdbcType=INTEGER},
+            </if>
+            <if test="cDerScore != null">
+                #{cDerScore,jdbcType=INTEGER},
+            </if>
+            <if test="cDerAccuracy != null">
+                #{cDerAccuracy,jdbcType=DECIMAL},
+            </if>
+            <if test="cResult != null">
+                #{cResult,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.ExercisesRecord">
+        update t_exercises_record
+        <set>
+            <if test="cUid != null">
+                C_UID = #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cErType != null">
+                C_ER_TYPE = #{cErType,jdbcType=CHAR},
+            </if>
+            <if test="cErQuestionId != null">
+                C_ER_QUESTION_ID = #{cErQuestionId,jdbcType=BIGINT},
+            </if>
+            <if test="cErQuestionNums != null">
+                C_ER_QUESTION_NUMS = #{cErQuestionNums,jdbcType=INTEGER},
+            </if>
+            <if test="cErTrueNums != null">
+                C_ER_TRUE_NUMS = #{cErTrueNums,jdbcType=INTEGER},
+            </if>
+            <if test="cErFalseNums != null">
+                C_ER_FALSE_NUMS = #{cErFalseNums,jdbcType=INTEGER},
+            </if>
+            <if test="cDerScore != null">
+                C_DER_SCORE = #{cDerScore,jdbcType=INTEGER},
+            </if>
+            <if test="cDerAccuracy != null">
+                C_DER_ACCURACY = #{cDerAccuracy,jdbcType=DECIMAL},
+            </if>
+            <if test="cResult != null">
+                C_RESULT = #{cResult,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_ER_ID = #{cErId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.ExercisesRecord">
+        update t_exercises_record
+        set C_UID = #{cUid,jdbcType=BIGINT},
+        C_ER_TYPE = #{cErType,jdbcType=CHAR},
+        C_ER_QUESTION_ID = #{cErQuestionId,jdbcType=BIGINT},
+        C_ER_QUESTION_NUMS = #{cErQuestionNums,jdbcType=INTEGER},
+        C_ER_TRUE_NUMS = #{cErTrueNums,jdbcType=INTEGER},
+        C_ER_FALSE_NUMS = #{cErFalseNums,jdbcType=INTEGER},
+        C_DER_SCORE = #{cDerScore,jdbcType=INTEGER},
+        C_DER_ACCURACY = #{cDerAccuracy,jdbcType=DECIMAL},
+        C_RESULT = #{cResult,jdbcType=VARCHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_ER_ID = #{cErId,jdbcType=BIGINT}
+    </update>
+</mapper>

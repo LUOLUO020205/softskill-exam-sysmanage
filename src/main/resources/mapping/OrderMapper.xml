@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.Order">
+        <id column="C_ORDER_ID" jdbcType="BIGINT" property="cOrderId"/>
+        <result column="C_UID" jdbcType="BIGINT" property="cUid"/>
+        <result column="C_COURSE_ID" jdbcType="BIGINT" property="cCourseId"/>
+        <result column="C_ORDER_AMOUNT" jdbcType="DECIMAL" property="cOrderAmount"/>
+        <result column="C_ORDER_PAY_TYPE" jdbcType="CHAR" property="cOrderPayType"/>
+        <result column="C_PERMISSION_LEVEL" jdbcType="DATE" property="cPermissionLevel"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_ORDER_ID, C_UID, C_COURSE_ID, C_ORDER_AMOUNT, C_ORDER_PAY_TYPE, C_PERMISSION_LEVEL,
+        C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_order
+        where C_ORDER_ID = #{cOrderId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_order
+        where C_ORDER_ID = #{cOrderId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.Order">
+        insert into t_order (C_ORDER_ID, C_UID, C_COURSE_ID,
+        C_ORDER_AMOUNT, C_ORDER_PAY_TYPE, C_PERMISSION_LEVEL,
+        C_CREATE_TIME, C_UPDATE_TIME)
+        values (#{cOrderId,jdbcType=BIGINT}, #{cUid,jdbcType=BIGINT}, #{cCourseId,jdbcType=BIGINT},
+        #{cOrderAmount,jdbcType=DECIMAL}, #{cOrderPayType,jdbcType=CHAR}, #{cPermissionLevel,jdbcType=DATE},
+        #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.Order">
+        insert into t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cOrderId != null">
+                C_ORDER_ID,
+            </if>
+            <if test="cUid != null">
+                C_UID,
+            </if>
+            <if test="cCourseId != null">
+                C_COURSE_ID,
+            </if>
+            <if test="cOrderAmount != null">
+                C_ORDER_AMOUNT,
+            </if>
+            <if test="cOrderPayType != null">
+                C_ORDER_PAY_TYPE,
+            </if>
+            <if test="cPermissionLevel != null">
+                C_PERMISSION_LEVEL,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cOrderId != null">
+                #{cOrderId,jdbcType=BIGINT},
+            </if>
+            <if test="cUid != null">
+                #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cCourseId != null">
+                #{cCourseId,jdbcType=BIGINT},
+            </if>
+            <if test="cOrderAmount != null">
+                #{cOrderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="cOrderPayType != null">
+                #{cOrderPayType,jdbcType=CHAR},
+            </if>
+            <if test="cPermissionLevel != null">
+                #{cPermissionLevel,jdbcType=DATE},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.Order">
+        update t_order
+        <set>
+            <if test="cUid != null">
+                C_UID = #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cCourseId != null">
+                C_COURSE_ID = #{cCourseId,jdbcType=BIGINT},
+            </if>
+            <if test="cOrderAmount != null">
+                C_ORDER_AMOUNT = #{cOrderAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="cOrderPayType != null">
+                C_ORDER_PAY_TYPE = #{cOrderPayType,jdbcType=CHAR},
+            </if>
+            <if test="cPermissionLevel != null">
+                C_PERMISSION_LEVEL = #{cPermissionLevel,jdbcType=DATE},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_ORDER_ID = #{cOrderId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.Order">
+        update t_order
+        set C_UID = #{cUid,jdbcType=BIGINT},
+        C_COURSE_ID = #{cCourseId,jdbcType=BIGINT},
+        C_ORDER_AMOUNT = #{cOrderAmount,jdbcType=DECIMAL},
+        C_ORDER_PAY_TYPE = #{cOrderPayType,jdbcType=CHAR},
+        C_PERMISSION_LEVEL = #{cPermissionLevel,jdbcType=DATE},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_ORDER_ID = #{cOrderId,jdbcType=BIGINT}
+    </update>
+</mapper>

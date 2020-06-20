@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.HistoryActualCombatMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.HistoryActualCombat">
+        <id column="C_HAC_ID" jdbcType="BIGINT" property="cHacId"/>
+        <result column="C_HAC_NAME" jdbcType="VARCHAR" property="cHacName"/>
+        <result column="C_HAC_DATE" jdbcType="DATE" property="cHacDate"/>
+        <result column="C_HAC_TIME" jdbcType="VARCHAR" property="cHacTime"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_HAC_ID, C_HAC_NAME, C_HAC_DATE, C_HAC_TIME, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_history_actual_combat
+        where C_HAC_ID = #{cHacId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_history_actual_combat
+        where C_HAC_ID = #{cHacId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.HistoryActualCombat">
+        insert into t_history_actual_combat (C_HAC_ID, C_HAC_NAME, C_HAC_DATE,
+        C_HAC_TIME, C_CREATE_TIME, C_UPDATE_TIME
+        )
+        values (#{cHacId,jdbcType=BIGINT}, #{cHacName,jdbcType=VARCHAR}, #{cHacDate,jdbcType=DATE},
+        #{cHacTime,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.HistoryActualCombat">
+        insert into t_history_actual_combat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cHacId != null">
+                C_HAC_ID,
+            </if>
+            <if test="cHacName != null">
+                C_HAC_NAME,
+            </if>
+            <if test="cHacDate != null">
+                C_HAC_DATE,
+            </if>
+            <if test="cHacTime != null">
+                C_HAC_TIME,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cHacId != null">
+                #{cHacId,jdbcType=BIGINT},
+            </if>
+            <if test="cHacName != null">
+                #{cHacName,jdbcType=VARCHAR},
+            </if>
+            <if test="cHacDate != null">
+                #{cHacDate,jdbcType=DATE},
+            </if>
+            <if test="cHacTime != null">
+                #{cHacTime,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.HistoryActualCombat">
+        update t_history_actual_combat
+        <set>
+            <if test="cHacName != null">
+                C_HAC_NAME = #{cHacName,jdbcType=VARCHAR},
+            </if>
+            <if test="cHacDate != null">
+                C_HAC_DATE = #{cHacDate,jdbcType=DATE},
+            </if>
+            <if test="cHacTime != null">
+                C_HAC_TIME = #{cHacTime,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_HAC_ID = #{cHacId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.HistoryActualCombat">
+        update t_history_actual_combat
+        set C_HAC_NAME = #{cHacName,jdbcType=VARCHAR},
+        C_HAC_DATE = #{cHacDate,jdbcType=DATE},
+        C_HAC_TIME = #{cHacTime,jdbcType=VARCHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_HAC_ID = #{cHacId,jdbcType=BIGINT}
+    </update>
+</mapper>

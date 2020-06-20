@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.ErrorFavoritesDetailsMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.ErrorFavoritesDetails">
+        <id column="C_EFD_ID" jdbcType="BIGINT" property="cEfdId"/>
+        <result column="C_QUES_ID" jdbcType="BIGINT" property="cQuesId"/>
+        <result column="C_EF_ID" jdbcType="BIGINT" property="cEfId"/>
+        <result column="C_EFD_OPTIONA" jdbcType="BIGINT" property="cEfdOptiona"/>
+        <result column="C_EFD_OPTIONB" jdbcType="BIGINT" property="cEfdOptionb"/>
+        <result column="C_EFD_OPTIONC" jdbcType="BIGINT" property="cEfdOptionc"/>
+        <result column="C_EFD_OPTIOND" jdbcType="BIGINT" property="cEfdOptiond"/>
+        <result column="C_EFD_CHOOSED" jdbcType="BIGINT" property="cEfdChoosed"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_EFD_ID, C_QUES_ID, C_EF_ID, C_EFD_OPTIONA, C_EFD_OPTIONB, C_EFD_OPTIONC, C_EFD_OPTIOND,
+        C_EFD_CHOOSED, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_error_favorites_details
+        where C_EFD_ID = #{cEfdId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_error_favorites_details
+        where C_EFD_ID = #{cEfdId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.ErrorFavoritesDetails">
+        insert into t_error_favorites_details (C_EFD_ID, C_QUES_ID, C_EF_ID,
+        C_EFD_OPTIONA, C_EFD_OPTIONB, C_EFD_OPTIONC,
+        C_EFD_OPTIOND, C_EFD_CHOOSED, C_CREATE_TIME,
+        C_UPDATE_TIME)
+        values (#{cEfdId,jdbcType=BIGINT}, #{cQuesId,jdbcType=BIGINT}, #{cEfId,jdbcType=BIGINT},
+        #{cEfdOptiona,jdbcType=BIGINT}, #{cEfdOptionb,jdbcType=BIGINT}, #{cEfdOptionc,jdbcType=BIGINT},
+        #{cEfdOptiond,jdbcType=BIGINT}, #{cEfdChoosed,jdbcType=BIGINT}, #{cCreateTime,jdbcType=TIMESTAMP},
+        #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.ErrorFavoritesDetails">
+        insert into t_error_favorites_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cEfdId != null">
+                C_EFD_ID,
+            </if>
+            <if test="cQuesId != null">
+                C_QUES_ID,
+            </if>
+            <if test="cEfId != null">
+                C_EF_ID,
+            </if>
+            <if test="cEfdOptiona != null">
+                C_EFD_OPTIONA,
+            </if>
+            <if test="cEfdOptionb != null">
+                C_EFD_OPTIONB,
+            </if>
+            <if test="cEfdOptionc != null">
+                C_EFD_OPTIONC,
+            </if>
+            <if test="cEfdOptiond != null">
+                C_EFD_OPTIOND,
+            </if>
+            <if test="cEfdChoosed != null">
+                C_EFD_CHOOSED,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cEfdId != null">
+                #{cEfdId,jdbcType=BIGINT},
+            </if>
+            <if test="cQuesId != null">
+                #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cEfId != null">
+                #{cEfId,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptiona != null">
+                #{cEfdOptiona,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptionb != null">
+                #{cEfdOptionb,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptionc != null">
+                #{cEfdOptionc,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptiond != null">
+                #{cEfdOptiond,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdChoosed != null">
+                #{cEfdChoosed,jdbcType=BIGINT},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.ErrorFavoritesDetails">
+        update t_error_favorites_details
+        <set>
+            <if test="cQuesId != null">
+                C_QUES_ID = #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cEfId != null">
+                C_EF_ID = #{cEfId,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptiona != null">
+                C_EFD_OPTIONA = #{cEfdOptiona,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptionb != null">
+                C_EFD_OPTIONB = #{cEfdOptionb,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptionc != null">
+                C_EFD_OPTIONC = #{cEfdOptionc,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdOptiond != null">
+                C_EFD_OPTIOND = #{cEfdOptiond,jdbcType=BIGINT},
+            </if>
+            <if test="cEfdChoosed != null">
+                C_EFD_CHOOSED = #{cEfdChoosed,jdbcType=BIGINT},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_EFD_ID = #{cEfdId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.ErrorFavoritesDetails">
+        update t_error_favorites_details
+        set C_QUES_ID = #{cQuesId,jdbcType=BIGINT},
+        C_EF_ID = #{cEfId,jdbcType=BIGINT},
+        C_EFD_OPTIONA = #{cEfdOptiona,jdbcType=BIGINT},
+        C_EFD_OPTIONB = #{cEfdOptionb,jdbcType=BIGINT},
+        C_EFD_OPTIONC = #{cEfdOptionc,jdbcType=BIGINT},
+        C_EFD_OPTIOND = #{cEfdOptiond,jdbcType=BIGINT},
+        C_EFD_CHOOSED = #{cEfdChoosed,jdbcType=BIGINT},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_EFD_ID = #{cEfdId,jdbcType=BIGINT}
+    </update>
+</mapper>

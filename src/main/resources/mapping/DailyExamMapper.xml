@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.DailyExamMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.DailyExam">
+        <id column="C_DE_ID" jdbcType="BIGINT" property="cDeId"/>
+        <result column="C_DE_NAME" jdbcType="VARCHAR" property="cDeName"/>
+        <result column="C_DE_DATE" jdbcType="DATE" property="cDeDate"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_DE_ID, C_DE_NAME, C_DE_DATE, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_daily_exam
+        where C_DE_ID = #{cDeId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_daily_exam
+        where C_DE_ID = #{cDeId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.DailyExam">
+        insert into t_daily_exam (C_DE_ID, C_DE_NAME, C_DE_DATE,
+        C_CREATE_TIME, C_UPDATE_TIME)
+        values (#{cDeId,jdbcType=BIGINT}, #{cDeName,jdbcType=VARCHAR}, #{cDeDate,jdbcType=DATE},
+        #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.DailyExam">
+        insert into t_daily_exam
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cDeId != null">
+                C_DE_ID,
+            </if>
+            <if test="cDeName != null">
+                C_DE_NAME,
+            </if>
+            <if test="cDeDate != null">
+                C_DE_DATE,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cDeId != null">
+                #{cDeId,jdbcType=BIGINT},
+            </if>
+            <if test="cDeName != null">
+                #{cDeName,jdbcType=VARCHAR},
+            </if>
+            <if test="cDeDate != null">
+                #{cDeDate,jdbcType=DATE},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.DailyExam">
+        update t_daily_exam
+        <set>
+            <if test="cDeName != null">
+                C_DE_NAME = #{cDeName,jdbcType=VARCHAR},
+            </if>
+            <if test="cDeDate != null">
+                C_DE_DATE = #{cDeDate,jdbcType=DATE},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_DE_ID = #{cDeId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.DailyExam">
+        update t_daily_exam
+        set C_DE_NAME = #{cDeName,jdbcType=VARCHAR},
+        C_DE_DATE = #{cDeDate,jdbcType=DATE},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_DE_ID = #{cDeId,jdbcType=BIGINT}
+    </update>
+</mapper>

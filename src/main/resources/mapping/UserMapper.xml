@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.User">
+        <id column="C_UID" jdbcType="BIGINT" property="cUid"/>
+        <result column="C_EF_ID" jdbcType="BIGINT" property="cEfId"/>
+        <result column="C_WXID" jdbcType="VARCHAR" property="cWxid"/>
+        <result column="C_NICK_NAME" jdbcType="VARCHAR" property="cNickName"/>
+        <result column="C_SEX" jdbcType="CHAR" property="cSex"/>
+        <result column="C_HEAD_IMG" jdbcType="VARCHAR" property="cHeadImg"/>
+        <result column="C_USER_TYPE" jdbcType="CHAR" property="cUserType"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_UID, C_EF_ID, C_WXID, C_NICK_NAME, C_SEX, C_HEAD_IMG, C_USER_TYPE, C_CREATE_TIME,
+        C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user
+        where C_UID = #{cUid,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_user
+        where C_UID = #{cUid,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.User">
+        insert into t_user (C_UID, C_EF_ID, C_WXID,
+        C_NICK_NAME, C_SEX, C_HEAD_IMG,
+        C_USER_TYPE, C_CREATE_TIME, C_UPDATE_TIME
+        )
+        values (#{cUid,jdbcType=BIGINT}, #{cEfId,jdbcType=BIGINT}, #{cWxid,jdbcType=VARCHAR},
+        #{cNickName,jdbcType=VARCHAR}, #{cSex,jdbcType=CHAR}, #{cHeadImg,jdbcType=VARCHAR},
+        #{cUserType,jdbcType=CHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.User">
+        insert into t_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cUid != null">
+                C_UID,
+            </if>
+            <if test="cEfId != null">
+                C_EF_ID,
+            </if>
+            <if test="cWxid != null">
+                C_WXID,
+            </if>
+            <if test="cNickName != null">
+                C_NICK_NAME,
+            </if>
+            <if test="cSex != null">
+                C_SEX,
+            </if>
+            <if test="cHeadImg != null">
+                C_HEAD_IMG,
+            </if>
+            <if test="cUserType != null">
+                C_USER_TYPE,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cUid != null">
+                #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cEfId != null">
+                #{cEfId,jdbcType=BIGINT},
+            </if>
+            <if test="cWxid != null">
+                #{cWxid,jdbcType=VARCHAR},
+            </if>
+            <if test="cNickName != null">
+                #{cNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="cSex != null">
+                #{cSex,jdbcType=CHAR},
+            </if>
+            <if test="cHeadImg != null">
+                #{cHeadImg,jdbcType=VARCHAR},
+            </if>
+            <if test="cUserType != null">
+                #{cUserType,jdbcType=CHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.User">
+        update t_user
+        <set>
+            <if test="cEfId != null">
+                C_EF_ID = #{cEfId,jdbcType=BIGINT},
+            </if>
+            <if test="cWxid != null">
+                C_WXID = #{cWxid,jdbcType=VARCHAR},
+            </if>
+            <if test="cNickName != null">
+                C_NICK_NAME = #{cNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="cSex != null">
+                C_SEX = #{cSex,jdbcType=CHAR},
+            </if>
+            <if test="cHeadImg != null">
+                C_HEAD_IMG = #{cHeadImg,jdbcType=VARCHAR},
+            </if>
+            <if test="cUserType != null">
+                C_USER_TYPE = #{cUserType,jdbcType=CHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_UID = #{cUid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.User">
+        update t_user
+        set C_EF_ID = #{cEfId,jdbcType=BIGINT},
+        C_WXID = #{cWxid,jdbcType=VARCHAR},
+        C_NICK_NAME = #{cNickName,jdbcType=VARCHAR},
+        C_SEX = #{cSex,jdbcType=CHAR},
+        C_HEAD_IMG = #{cHeadImg,jdbcType=VARCHAR},
+        C_USER_TYPE = #{cUserType,jdbcType=CHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_UID = #{cUid,jdbcType=BIGINT}
+    </update>
+    <!--<select id="queryUserByNameAndPwd" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+        <!--select-->
+        <!--<include refid="Base_Column_List"/>-->
+        <!--from t_user-->
+        <!--where C_UID = #{cUid,jdbcType=BIGINT}-->
+    <!--</select>-->
+</mapper>

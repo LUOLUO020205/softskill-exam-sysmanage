@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.CourseMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.Course">
+        <id column="C_COURSE_ID" jdbcType="BIGINT" property="cCourseId"/>
+        <result column="C_COURSE_NAME" jdbcType="VARCHAR" property="cCourseName"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_COURSE_ID, C_COURSE_NAME, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="com.softskill.exam.domain.Course" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_course
+        where 1=1
+        <if test="cCourseId != null and cCourseId != ''">
+            and  C_COURSE_ID = #{cCourseId,jdbcType=BIGINT}
+        </if>
+        <if test="cCourseName != null and cCourseName != ''">
+            and C_COURSE_NAME = #{cCourseName}
+        </if>
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_course where 1=1
+    </select>
+
+    <select id="selectAllCourseByParams" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_course where 1=1
+        <trim>
+            <if test="cCourseNameSearchkey != null and cCourseNameSearchkey != ''">
+                and C_COURSE_NAME like CONCAT('%',#{cCourseNameSearchkey},'%')
+            </if>
+        </trim>
+        limit #{pageModel.startRow},#{pageModel.pageSize};
+    </select>
+
+    <select id="countAllCourseByParams" parameterType="Map" resultType="java.lang.Long">
+        select
+        count(1)
+        from t_course where 1=1
+        <trim>
+            <if test="cCourseNameSearchkey != null and cCourseNameSearchkey != ''">
+                and C_COURSE_NAME like CONCAT('%',#{cCourseNameSearchkey},'%')
+            </if>
+        </trim>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_course
+        where C_COURSE_ID = #{cCourseId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="cCourseId" parameterType="com.softskill.exam.domain.Course" >
+        insert into t_course (C_COURSE_ID, C_COURSE_NAME, C_CREATE_TIME,
+        C_UPDATE_TIME)
+        values (#{cCourseId,jdbcType=BIGINT}, #{cCourseName,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP},
+        #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.Course">
+        insert into t_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cCourseId != null">
+                C_COURSE_ID,
+            </if>
+            <if test="cCourseName != null">
+                C_COURSE_NAME,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cCourseId != null">
+                #{cCourseId,jdbcType=BIGINT},
+            </if>
+            <if test="cCourseName != null">
+                #{cCourseName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.Course">
+        update t_course
+        <set>
+            <if test="cCourseName != null">
+                C_COURSE_NAME = #{cCourseName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_COURSE_ID = #{cCourseId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.Course">
+        update t_course
+        set C_COURSE_NAME = #{cCourseName,jdbcType=VARCHAR},
+        C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_COURSE_ID = #{cCourseId,jdbcType=BIGINT}
+    </update>
+
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.HacQuestionMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.HacQuestion">
+        <result column="C_QUES_ID" jdbcType="BIGINT" property="cQuesId"/>
+        <result column="C_HAC_ID" jdbcType="BIGINT" property="cHacId"/>
+        <result column="C_HQ_SORTNUM" jdbcType="INTEGER" property="cHqSortnum"/>
+        <result column="C_HQ_OPTIONA" jdbcType="BIGINT" property="cHqOptiona"/>
+        <result column="C_HQ_OPTIONB" jdbcType="BIGINT" property="cHqOptionb"/>
+        <result column="C_HQ_OPTIONC" jdbcType="BIGINT" property="cHqOptionc"/>
+        <result column="C_HQ_OPTIOND" jdbcType="BIGINT" property="cHqOptiond"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.softskill.exam.domain.HacQuestion">
+        insert into t_hac_question (C_QUES_ID, C_HAC_ID, C_HQ_SORTNUM,
+        C_HQ_OPTIONA, C_HQ_OPTIONB, C_HQ_OPTIONC,
+        C_HQ_OPTIOND, C_CREATE_TIME, C_UPDATE_TIME
+        )
+        values (#{cQuesId,jdbcType=BIGINT}, #{cHacId,jdbcType=BIGINT}, #{cHqSortnum,jdbcType=INTEGER},
+        #{cHqOptiona,jdbcType=BIGINT}, #{cHqOptionb,jdbcType=BIGINT}, #{cHqOptionc,jdbcType=BIGINT},
+        #{cHqOptiond,jdbcType=BIGINT}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.HacQuestion">
+        insert into t_hac_question
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cQuesId != null">
+                C_QUES_ID,
+            </if>
+            <if test="cHacId != null">
+                C_HAC_ID,
+            </if>
+            <if test="cHqSortnum != null">
+                C_HQ_SORTNUM,
+            </if>
+            <if test="cHqOptiona != null">
+                C_HQ_OPTIONA,
+            </if>
+            <if test="cHqOptionb != null">
+                C_HQ_OPTIONB,
+            </if>
+            <if test="cHqOptionc != null">
+                C_HQ_OPTIONC,
+            </if>
+            <if test="cHqOptiond != null">
+                C_HQ_OPTIOND,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cQuesId != null">
+                #{cQuesId,jdbcType=BIGINT},
+            </if>
+            <if test="cHacId != null">
+                #{cHacId,jdbcType=BIGINT},
+            </if>
+            <if test="cHqSortnum != null">
+                #{cHqSortnum,jdbcType=INTEGER},
+            </if>
+            <if test="cHqOptiona != null">
+                #{cHqOptiona,jdbcType=BIGINT},
+            </if>
+            <if test="cHqOptionb != null">
+                #{cHqOptionb,jdbcType=BIGINT},
+            </if>
+            <if test="cHqOptionc != null">
+                #{cHqOptionc,jdbcType=BIGINT},
+            </if>
+            <if test="cHqOptiond != null">
+                #{cHqOptiond,jdbcType=BIGINT},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

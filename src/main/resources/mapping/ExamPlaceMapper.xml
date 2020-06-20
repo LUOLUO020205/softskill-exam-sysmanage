@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.ExamPlaceMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.ExamPlace">
+        <id column="C_EP_ID" jdbcType="BIGINT" property="cEpId"/>
+        <result column="C_CH_ID" jdbcType="BIGINT" property="cChId"/>
+        <result column="C_EP_NAME" jdbcType="VARCHAR" property="cEpName"/>
+        <result column="C_CREATE_TIME" jdbcType="TIMESTAMP" property="cCreateTime"/>
+        <result column="C_UPDATE_TIME" jdbcType="TIMESTAMP" property="cUpdateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        C_EP_ID, C_CH_ID, C_EP_NAME, C_CREATE_TIME, C_UPDATE_TIME
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_exam_place
+        where C_EP_ID = #{cEpId,jdbcType=BIGINT}
+    </select>
+    <select id="selectAllExamPlace"  resultType="com.softskill.exam.vo.ExamPlaceVo">
+        select
+        ep.c_Ep_id cEpId,ep.c_ep_name cEpName,ep.c_ch_id cChId,ep.c_create_time cCreateTime,ep.c_update_time cUpdateTime, (select tc.c_Ch_Name from t_chapter tc where tc.c_Ch_Id = ep.C_CH_ID) cChName
+        from t_exam_place ep
+        where 1=1 order by ep.C_UPDATE_TIME desc
+    </select>
+
+    <select id="selectAllExamPlaceByCouseId" parameterType="Map" resultType="com.softskill.exam.vo.ExamPlaceVo">
+        select
+        ep.c_Ep_id cEpId,ep.c_ep_name cEpName,ep.c_ch_id cChId,ep.c_create_time cCreateTime,ep.c_update_time cUpdateTime,tc.c_Ch_Name cChName
+        from t_exam_place ep LEFT JOIN t_chapter tc ON tc.c_Ch_Id = ep.C_CH_ID
+        where 1=1
+        <if test="cEpNameSearchkey != null and cEpNameSearchkey != ''">
+            and ep.C_EP_NAME like CONCAT('%',#{cEpNameSearchkey},'%')
+        </if>
+        <if test="cChapterNameSearchkey != null and cChapterNameSearchkey != ''">
+            and tc.C_CH_NAME like CONCAT('%',#{cChapterNameSearchkey},'%')
+        </if>
+        order by ep.C_UPDATE_TIME desc
+        limit #{pageModel.startRow},#{pageModel.pageSize};
+    </select>
+
+    <select id="countAllExamPlaceByCouseId" parameterType="Map" resultType="java.lang.Long">
+        select
+        count(1)
+        from t_exam_place ep LEFT JOIN t_chapter tc ON tc.c_Ch_Id = ep.C_CH_ID
+        where 1=1
+        <trim>
+            <if test="cEpNameSearchkey != null and cEpNameSearchkey != ''">
+                and ep.C_EP_NAME like CONCAT('%',#{cEpNameSearchkey},'%')
+            </if>
+            <if test="cChapterNameSearchkey != null and cChapterNameSearchkey != ''">
+                and tc.C_CH_NAME like CONCAT('%',#{cChapterNameSearchkey},'%')
+            </if>
+        </trim>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from t_exam_place
+        where C_EP_ID = #{cEpId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.ExamPlace">
+        insert into t_exam_place (C_EP_ID, C_CH_ID, C_EP_NAME,
+        C_CREATE_TIME, C_UPDATE_TIME)
+        values (#{cEpId,jdbcType=BIGINT}, #{cChId,jdbcType=BIGINT}, #{cEpName,jdbcType=VARCHAR},
+        #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.ExamPlace">
+        insert into t_exam_place
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cEpId != null">
+                C_EP_ID,
+            </if>
+            <if test="cChId != null">
+                C_CH_ID,
+            </if>
+            <if test="cEpName != null">
+                C_EP_NAME,
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME,
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cEpId != null">
+                #{cEpId,jdbcType=BIGINT},
+            </if>
+            <if test="cChId != null">
+                #{cChId,jdbcType=BIGINT},
+            </if>
+            <if test="cEpName != null">
+                #{cEpName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.softskill.exam.domain.ExamPlace">
+        update t_exam_place
+        <set>
+            <if test="cChId != null">
+                C_CH_ID = #{cChId,jdbcType=BIGINT},
+            </if>
+            <if test="cEpName != null">
+                C_EP_NAME = #{cEpName,jdbcType=VARCHAR},
+            </if>
+            <if test="cCreateTime != null">
+                C_CREATE_TIME = #{cCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cUpdateTime != null">
+                C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where C_EP_ID = #{cEpId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.softskill.exam.domain.ExamPlace">
+        update t_exam_place
+        set C_CH_ID = #{cChId,jdbcType=BIGINT},
+        C_EP_NAME = #{cEpName,jdbcType=VARCHAR},
+        C_UPDATE_TIME = #{cUpdateTime,jdbcType=TIMESTAMP}
+        where C_EP_ID = #{cEpId,jdbcType=BIGINT}
+    </update>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.softskill.exam.dao.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.softskill.exam.domain.UserRoleKey">
+        <id column="C_UID" jdbcType="BIGINT" property="cUid"/>
+        <id column="C_ROLE_ID" jdbcType="BIGINT" property="cRoleId"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="com.softskill.exam.domain.UserRoleKey">
+        delete from t_user_role
+        where C_UID = #{cUid,jdbcType=BIGINT}
+        and C_ROLE_ID = #{cRoleId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.softskill.exam.domain.UserRoleKey">
+        insert into t_user_role (C_UID, C_ROLE_ID)
+        values (#{cUid,jdbcType=BIGINT}, #{cRoleId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.softskill.exam.domain.UserRoleKey">
+        insert into t_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cUid != null">
+                C_UID,
+            </if>
+            <if test="cRoleId != null">
+                C_ROLE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cUid != null">
+                #{cUid,jdbcType=BIGINT},
+            </if>
+            <if test="cRoleId != null">
+                #{cRoleId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+</mapper>
